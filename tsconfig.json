@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "outDir": "./dist",
+      "target": "es2020",
+      "esModuleInterop": true,
+      "jsx": "react",
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "strictFunctionTypes": true,
+      "strictBindCallApply": true,
+      "noImplicitThis": true,
+      "moduleResolution": "node",
+      "module": "commonjs",
+      "declaration": true,
+      "removeComments": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": false,
+      "baseUrl": "./",
+      "incremental": true
+    },
+    "include": [
+      "./src/**/*"
+    ],
+  }
+  
