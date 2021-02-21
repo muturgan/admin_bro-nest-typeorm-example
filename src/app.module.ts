@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AdminModule } from '@admin-bro/nestjs';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserEntity } from './user/user.entity';
-import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,21 +17,21 @@ import { UserModule } from './user/user.module';
         password: 'password',
         database: 'database_test',
         entities: [UserEntity],
-        synchronize: false,
+        synchronize: true,
         logging: false,
       }),
     AdminModule.createAdminAsync({
       imports: [
-        UserModule,
+        TypeOrmModule.forFeature([UserEntity]),
       ],
       inject: [
         getRepositoryToken(UserEntity),
       ],
-      useFactory: (userModel: UserEntity) => ({
+      useFactory: (userRepository: Repository<UserEntity>) => ({
         adminBroOptions: {
           rootPath: '/admin',
           resources: [
-            { resource: userModel },
+            { resource: userRepository },
           ],
         },
         auth: {
@@ -41,7 +41,6 @@ import { UserModule } from './user/user.module';
         },
       }),
     }),
-    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
