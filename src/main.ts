@@ -4,9 +4,8 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
 
-AdminBro.registerAdapter({ Database, Resource });
-
 const bootstrap = async () => {
+  AdminBro.registerAdapter({ Database, Resource });
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
 }

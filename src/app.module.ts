@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AdminModule } from '@admin-bro/nestjs';
-import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Connection } from 'typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -21,18 +21,11 @@ import { UserEntity } from './user/user.entity';
         logging: false,
       }),
     AdminModule.createAdminAsync({
-      imports: [
-        TypeOrmModule.forFeature([UserEntity]),
-      ],
-      inject: [
-        getRepositoryToken(UserEntity),
-      ],
-      useFactory: (userRepository: Repository<UserEntity>) => ({
+      inject: [Connection],
+      useFactory: (conn: Connection) => ({
         adminBroOptions: {
           rootPath: '/admin',
-          resources: [
-            { resource: userRepository },
-          ],
+          databases: [conn],
         },
         auth: {
           authenticate: async (email, password) => Promise.resolve({ email: 'test' }),
