@@ -6,6 +6,7 @@ import { Connection } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserEntity } from './user/user.entity';
+import { ProductEntity } from './product/product.entity';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { UserEntity } from './user/user.entity';
         username: 'postgres',
         password: 'password',
         database: 'database_test',
-        entities: [UserEntity],
+        entities: [UserEntity, ProductEntity],
         synchronize: true,
         logging: false,
       }),
